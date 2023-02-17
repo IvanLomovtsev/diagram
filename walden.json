@@ -174,10 +174,10 @@
             "color": "#999999"
         },
         "splitLine": {
-            "show": true,
+            "show": false,
             "lineStyle": {
                 "color": [
-                    "#eeeeee"
+                    "#000000"
                 ]
             }
         },
@@ -209,7 +209,7 @@
             "color": "#999999"
         },
         "splitLine": {
-            "show": true,
+            "show": false,
             "lineStyle": {
                 "color": [
                     "#eeeeee"

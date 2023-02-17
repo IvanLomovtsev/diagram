@@ -23,13 +23,27 @@ fetch('walden.json')
             text: 'Проекты в программах и вне программ',
             subtext: 'Сумма и процентное соотношение проектов, находящихся в программах и вне программ'
         },
-        legend: {},
+        legend: {
+            icon: 'circle',
+            left: '15%',
+            top: '95%'
+        },
         xAxis: {
             type: 'category',
             data: month,
+            axisTick: {
+                alignWithLabel: true
+            },
+            splitline: {
+                show: false
+            }
         },
         yAxis: {
             type: 'value'
+        },
+        tooltip: {
+            trigger: 'axis',
+            formatter: '{b0}<br />{b1}: {c0}<br />{b}: {c1}'
         },
         series: [
             {
@@ -66,7 +80,12 @@ fetch('walden.json')
                 emphasis: {
                     focus: 'none'
                 },
-                data: [10, 10, 10, 10, 10, 10, 10]
+                label: {
+                    show: true,
+                    formatter: '',
+                    position: 'top'
+                },
+                data: [10, 11, 12, 13, 14, 15, 16]
             }
         ]
       });
