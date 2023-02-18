@@ -1,4 +1,4 @@
-import {data} from './src/data.js'
+import {data} from './data.js'
 
 //получаем массив месяцев, имён для графика
 let month = [];
