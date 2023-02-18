@@ -11,6 +11,7 @@ data.forEach(element => {
 month = Array.from(new Set(month));
 name = Array.from(new Set(name));
 
+//получаем массивы данных для каждой категории данных
 let seriesData = []
 name.forEach(currentName=>{
     let nameData = [];
@@ -24,16 +25,16 @@ name.forEach(currentName=>{
     seriesData.push(nameData)
 })
 
-console.log(seriesData)
-
+//создаём ссылку на объект DOM-дерева с id = "main"
 let container = document.getElementById('main');
 
+//загружаем первичную настройку темы из Theme Builder of Echarts
 fetch('walden.json')
   .then(r => r.json())
   .then(theme => {
     echarts.registerTheme('walden', theme);
     let chart = echarts.init(container, 'walden'); 
-    
+    //создаём шаблоны элементов диаграммы с накоплением
     let mySeries = [
         {
             name: name[1],
@@ -54,18 +55,18 @@ fetch('walden.json')
             },
             data: seriesData[0],
             label: {
-                normal: {
-                    show: true,
-                    position: 'top',
-                    formatter: (params) => {
-                        let total = 0;
-                        mySeries.forEach(serie => {
-                            if (serie.stack === 'In Program'){
-                                total += serie.data[params.dataIndex];
-                            }
-                        })
-                    return total;
-                    }
+                show: true,
+                position: 'top',
+                fontWeight: 'bold',
+                //реализуем функцию по подсчёту суммарного значения одного стека диаграммы
+                formatter: (params) => {
+                    let total = 0;
+                    mySeries.forEach(serie => {
+                        if (serie.stack === 'In Program'){
+                            total += serie.data[params.dataIndex];
+                        }
+                    })
+                return total;
                 }
             }
         },
@@ -85,11 +86,15 @@ fetch('walden.json')
             emphasis: {
                 focus: 'none'
             },
+            select: {
+                selectedMode: true
+            },
             data: seriesData[2],
             label: {
                 normal: {
                     show: true,
                     position: 'top',
+                    fontWeight: 'bold',
                     formatter: (params) => {
                         let total = 0;
                         mySeries.forEach(serie => {
@@ -103,7 +108,7 @@ fetch('walden.json')
             }
         }
     ]
-    
+    //основные параметры диаграммы
     const option = {
         title: {
             text: 'Проекты в программах и вне программ',
@@ -113,20 +118,11 @@ fetch('walden.json')
             icon: 'circle',
             left: '15%',
             top: '95%',
-            data: [
-                {
-                    name: name[0]
-                },
-                {
-                    name: name[1]
-                },
-                {
-                    name: name[2]
-                },
-                {
-                    name: name[3]
-                }
-            ]
+            data: [name[0], name[1], name[2], name[3]],
+        },
+        grid: {
+            left: '6%',
+            top: '15%'
         },
         xAxis: {
             type: 'category',
@@ -134,7 +130,6 @@ fetch('walden.json')
             axisTick: {
                 alignWithLabel: true
             },
-            
         },
         yAxis: {
             type: 'value'
@@ -158,4 +153,4 @@ fetch('walden.json')
       chart.setOption({
         series: mySeries
       })
-    });
+});
