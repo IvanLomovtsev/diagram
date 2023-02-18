@@ -32,8 +32,79 @@ fetch('walden.json')
   .then(r => r.json())
   .then(theme => {
     echarts.registerTheme('walden', theme);
-    let chart = echarts.init(container, 'walden');
-    chart.setOption({
+    let chart = echarts.init(container, 'walden'); 
+    
+    let mySeries = [
+        {
+            name: name[1],
+            type: 'bar',
+            stack: 'In Program',
+            emphasis: {
+                focus: 'none'
+            },
+            data: seriesData[1]
+        },
+        {
+            name: name[0],
+            type: 'bar',
+            stack: 'In Program',
+            stackStrategy: 'all',
+            emphasis: {
+                focus: 'none'
+            },
+            data: seriesData[0],
+            label: {
+                normal: {
+                    show: true,
+                    position: 'top',
+                    formatter: (params) => {
+                        let total = 0;
+                        mySeries.forEach(serie => {
+                            if (serie.stack === 'In Program'){
+                                total += serie.data[params.dataIndex];
+                            }
+                        })
+                    return total;
+                    }
+                }
+            }
+        },
+        {
+            name: name[3],
+            type: 'bar',
+            stack: 'Outside Program',
+            emphasis: {
+                focus: 'none'
+            },
+            data: seriesData[3]
+        },
+        {
+            name: name[2],
+            type: 'bar',
+            stack: 'Outside Program',
+            emphasis: {
+                focus: 'none'
+            },
+            data: seriesData[2],
+            label: {
+                normal: {
+                    show: true,
+                    position: 'top',
+                    formatter: (params) => {
+                        let total = 0;
+                        mySeries.forEach(serie => {
+                            if (serie.stack === 'Outside Program'){
+                                total += serie.data[params.dataIndex];
+                            }
+                        })
+                    return total;
+                    }
+                }
+            }
+        }
+    ]
+    
+    const option = {
         title: {
             text: 'Проекты в программах и вне программ',
             subtext: 'Сумма и процентное соотношение проектов, находящихся в программах и вне программ'
@@ -80,61 +151,11 @@ fetch('walden.json')
             crossStyle: {
                 color: "#999",
                 width: 1,
-            }
+            },
           },
-        series: [
-            {
-                name: name[1],
-                type: 'bar',
-                stack: 'In Program',
-                emphasis: {
-                    focus: 'none'
-                },
-                data: seriesData[1]
-            },
-            {
-                name: name[0],
-                type: 'bar',
-                stack: 'In Program',
-                stackStrategy: 'all',
-                emphasis: {
-                    focus: 'none'
-                },
-                label: {
-                    show: true,
-                    formatter: '{c}',   
-                    position: 'top'
-                },
-                data: seriesData[0]
-            },
-            {
-                name: name[3],
-                type: 'bar',
-                stack: 'Outside Program',
-                emphasis: {
-                    focus: 'none'
-                },
-                label: {
-                    show: true,
-                    formatter: '{c}',   
-                    position: 'top'
-                },
-                data: seriesData[3]
-            },
-            {
-                name: name[2],
-                type: 'bar',
-                stack: 'Outside Program',
-                emphasis: {
-                    focus: 'none'
-                },
-                label: {
-                    show: true,
-                    formatter: '1035',  
-                    position: 'top'
-                },
-                data: seriesData[2]
-            }
-        ]
-      });
-  })
+      }
+      chart.setOption(option)
+      chart.setOption({
+        series: mySeries
+      })
+    });
