@@ -130,7 +130,7 @@ fetch('walden.json')
                 },
                 label: {
                     show: true,
-                    formatter: '{c}',   
+                    formatter: '1035',  
                     position: 'top'
                 },
                 data: seriesData[2]
