@@ -11,6 +11,21 @@ data.forEach(element => {
 month = Array.from(new Set(month));
 name = Array.from(new Set(name));
 
+let seriesData = []
+name.forEach(currentName=>{
+    let nameData = [];
+    month.forEach(currentMonth=>{
+        data.forEach(currentData =>{
+            if (currentData['period']===currentMonth && currentData['name']===currentName) {
+                nameData.push(currentData['value'])
+            } 
+        })
+    })
+    seriesData.push(nameData)
+})
+
+console.log(seriesData)
+
 let container = document.getElementById('main');
 
 fetch('walden.json')
@@ -34,17 +49,25 @@ fetch('walden.json')
             axisTick: {
                 alignWithLabel: true
             },
-            splitline: {
-                show: false
-            }
+            
         },
         yAxis: {
             type: 'value'
         },
         tooltip: {
             trigger: 'axis',
-            formatter: '{b0}<br />{b1}: {c0}<br />{b}: {c1}'
-        },
+            axisPointer: {
+                type: "line",
+                axis: "auto",
+                animation: "auto",
+                animationDurationUpdate: "200",
+                animationEasingUpdate: "exponentialOut"
+            },
+            crossStyle: {
+                color: "#999",
+                width: 1,
+            }
+          },
         series: [
             {
                 name: name[0],
@@ -53,16 +76,22 @@ fetch('walden.json')
                 emphasis: {
                     focus: 'none'
                 },
-                data: [20, 60, 70, 30, 50, 75, 60]
+                data: seriesData[0]
             },
             {
                 name: name[1],
                 type: 'bar',
                 stack: 'In Program',
+                stackStrategy: 'all',
                 emphasis: {
                     focus: 'none'
                 },
-                data: [10, 10, 10, 10, 10, 10, 10]
+                label: {
+                    show: true,
+                    formatter: '{c}',   
+                    position: 'top'
+                },
+                data: seriesData[1]
             },
             {
                 name: name[2],
@@ -71,7 +100,12 @@ fetch('walden.json')
                 emphasis: {
                     focus: 'none'
                 },
-                data: [30, 40, 30, 50, 45, 20, 10]
+                label: {
+                    show: true,
+                    formatter: '{c}',   
+                    position: 'top'
+                },
+                data: seriesData[2]
             },
             {
                 name: name[3],
@@ -82,10 +116,10 @@ fetch('walden.json')
                 },
                 label: {
                     show: true,
-                    formatter: '',
+                    formatter: '{c}',   
                     position: 'top'
                 },
-                data: [10, 11, 12, 13, 14, 15, 16]
+                data: seriesData[3]
             }
         ]
       });

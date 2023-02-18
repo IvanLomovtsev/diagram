@@ -189,6 +189,19 @@
                     "#f2b904"
                 ]
             }
+        },
+        "minorTick": {
+            "show": true,
+            "splitNumber": 5,
+            "length": 3
+        },
+        "minorSplitLine": {
+            "show": true,
+            "lineStyle": {
+                "color": [
+                    "#f2b904"
+                ]
+            }
         }
     },
     "valueAxis": {
