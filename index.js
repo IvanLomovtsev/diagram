@@ -1,4 +1,4 @@
-import {data} from './data.js'
+import {data} from './src/data.js'
 
 //получаем массив месяцев, имён для графика
 let month = [];
@@ -29,7 +29,7 @@ name.forEach(currentName=>{
 let container = document.getElementById('main');
 
 //загружаем первичную настройку темы из Theme Builder of Echarts
-fetch('walden.json')
+fetch('./src/walden.json')
   .then(r => r.json())
   .then(theme => {
     echarts.registerTheme('walden', theme);
