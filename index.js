@@ -41,7 +41,21 @@ fetch('walden.json')
         legend: {
             icon: 'circle',
             left: '15%',
-            top: '95%'
+            top: '95%',
+            data: [
+                {
+                    name: name[0]
+                },
+                {
+                    name: name[1]
+                },
+                {
+                    name: name[2]
+                },
+                {
+                    name: name[3]
+                }
+            ]
         },
         xAxis: {
             type: 'category',
@@ -70,16 +84,16 @@ fetch('walden.json')
           },
         series: [
             {
-                name: name[0],
+                name: name[1],
                 type: 'bar',
                 stack: 'In Program',
                 emphasis: {
                     focus: 'none'
                 },
-                data: seriesData[0]
+                data: seriesData[1]
             },
             {
-                name: name[1],
+                name: name[0],
                 type: 'bar',
                 stack: 'In Program',
                 stackStrategy: 'all',
@@ -91,21 +105,7 @@ fetch('walden.json')
                     formatter: '{c}',   
                     position: 'top'
                 },
-                data: seriesData[1]
-            },
-            {
-                name: name[2],
-                type: 'bar',
-                stack: 'Outside Program',
-                emphasis: {
-                    focus: 'none'
-                },
-                label: {
-                    show: true,
-                    formatter: '{c}',   
-                    position: 'top'
-                },
-                data: seriesData[2]
+                data: seriesData[0]
             },
             {
                 name: name[3],
@@ -120,6 +120,20 @@ fetch('walden.json')
                     position: 'top'
                 },
                 data: seriesData[3]
+            },
+            {
+                name: name[2],
+                type: 'bar',
+                stack: 'Outside Program',
+                emphasis: {
+                    focus: 'none'
+                },
+                label: {
+                    show: true,
+                    formatter: '{c}',   
+                    position: 'top'
+                },
+                data: seriesData[2]
             }
         ]
       });
